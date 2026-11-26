@@ -1,0 +1,41 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "db": ".\\mongodb_bin\\MongoDB\\Server\\9.0\\bin\\mongod.exe --dbpath .\\data\\db --bind_ip 127.0.0.1 --port 27017",
+    "dev": "nodemon index.js",
+    "prod": "pm2 start index.js --name fresh-server --watch",
+    "end": "pm2 stop all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http-proxy-middleware": "^2.0.6",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.4",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "pm2": "^5.3.0",
+    "stripe": "^12.4.0",
+    "util": "^0.12.5",
+    "validator": "^13.9.0"
+  }
+}

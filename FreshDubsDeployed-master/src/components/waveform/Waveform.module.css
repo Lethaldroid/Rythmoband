@@ -1,0 +1,8 @@
+.omo {
+  width: 100%;
+  pointer-events: none;
+}
+
+.omo canvas {
+  width: 100% !important;
+}

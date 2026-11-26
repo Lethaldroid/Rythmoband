@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Rythmoband (FreshDubs)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A browser-based dubbing editor with dynamic subtitle lanes, video scrubbing,
+voice takes, audio export, and rehearsal-video export.
 
-## Available Scripts
+## Clone
 
-In the project directory, you can run:
+```sh
+git clone https://github.com/Lethaldroid/Rythmoband.git
+cd Rythmoband
+```
 
-### `npm start`
+Use Node.js and npm. The frontend declares Node 20.x and npm 7.6 or later in the 7.x line. The backend declares Node 18.x. For the full editor,
+install and start MongoDB separately. A Chromium browser on localhost works
+for microphone recording and WebM export.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Start the API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+From the clone root, run these commands in a PowerShell terminal.
 
-### `npm test`
+```powershell
+cd FreshDubs-Server-main
+Copy-Item .env.example .env
+npm ci
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+On macOS or Linux, use `cp .env.example .env` in place of `Copy-Item`.
 
-### `npm run build`
+In the API's `.env`, configure a random `SECRET`, a Stripe **test-mode** secret
+key in `STRIPE_SECRET_KEY`, and the MongoDB connection URI if it differs from
+the default. Email/password signup creates a Stripe test customer. Leave the
+Google placeholders for local email/password login. The Google OAuth callback
+currently points to the deployed API and needs local configuration if you
+want to test Google login. Mail flows use `SMTP_USER` and `SMTP_PASSWORD`;
+translation uses `GEMINI_API_KEY`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Start the API with `npm start` and wait for the database connection message.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Start the frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In a second terminal from the clone root, run:
 
-### `npm run eject`
+```powershell
+cd FreshDubsDeployed-master
+Copy-Item .env.example .env
+npm ci --legacy-peer-deps
+npx craco start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Use `cp .env.example .env` on macOS or Linux. Open
+[http://localhost:3000](http://localhost:3000), sign up or log in, create/open
+a project, and use **Upload** to add a video and up to three SRT files.
+Keep the frontend on port 3000 for the API's local CORS configuration.
+The public [subtitle player](http://localhost:3000/subplayer) can also be
+opened directly after starting the frontend.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Run `npx craco build` from the frontend directory for a production build.
+Local environment files, database contents, dependencies and builds are
+excluded from version control.

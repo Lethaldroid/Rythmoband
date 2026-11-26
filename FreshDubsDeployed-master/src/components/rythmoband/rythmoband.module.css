@@ -1,0 +1,164 @@
+.mainContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #18181c 0%, #111114 100%);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 12px);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.scrubbable {
+  cursor: grab;
+}
+
+.scrubbable:active {
+  cursor: grabbing;
+}
+
+.laneDivider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+/* Scrolling track: anchored at the sync line, moved only via transform. */
+.track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 25%;
+  width: 0;
+  will-change: transform;
+  contain: layout style;
+}
+
+/* One tick per second along the bottom edge. */
+.ruler {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 6px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+.lane {
+  position: absolute;
+  left: 0;
+  contain: layout style;
+}
+
+.cue {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 0.2em 0 calc(0.2em + 2px);
+  font-weight: 700;
+  line-height: 1;
+  white-space: pre;
+  color: var(--text-main, #f4f4f5);
+  background: #26262d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--track-color);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+.cueText {
+  display: inline-block;
+  transform-origin: left center;
+}
+
+/* Line currently crossing the sync bar. */
+.active {
+  /* track colours are bright, so filled cues take dark text */
+  color: #0b0b0d;
+  background: var(--track-color);
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(244, 244, 245, 0.9), 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.laneLabel {
+  position: absolute;
+  left: 6px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.laneLabel::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: var(--track-color);
+}
+
+.laneLabel {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted, #a1a1aa);
+}
+
+.empty strong {
+  color: var(--text-main, #f4f4f5);
+}
+
+.empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted, #a1a1aa);
+  pointer-events: none;
+}
+
+.redLineContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 25%;
+  width: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.redLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  width: 4px;
+  background: var(--primary, #ff5a36);
+  box-shadow: 0 0 10px rgba(255, 90, 54, 0.75);
+}
+
+.redMarkerTriangle {
+  position: absolute;
+  top: 0;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid var(--primary, #ff5a36);
+}
